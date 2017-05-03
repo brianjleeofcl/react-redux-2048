@@ -1,0 +1,10 @@
+.Square {
+  height: 75px;
+  width: 75px;
+  margin: 5px;
+  border-radius: 15px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  /*mix-blend-mode: exclusion;*/
+}
