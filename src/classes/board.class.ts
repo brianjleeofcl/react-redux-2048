@@ -1,6 +1,67 @@
-import Board from './board.class';
 
-export const movements = {
+
+export default class Board {
+  public array: number[];
+  public scale: number;
+
+  constructor(n: number) {
+    this.array = Array(n * n).fill(0);
+    this.scale = n;
+  }
+
+  get matrix() {
+    const len = this.array.length ** 0.5;
+    const arr = [];
+    for (let i = 0; i < len; i++) {
+      arr.push(this.array.slice(i * len, (i + 1) * len));
+    }
+    return arr;
+  }
+
+  set matrix(mtx: number[][]) {
+    const arr = Array(0);
+    this.array = arr.concat(...mtx);
+  }
+
+  get score(): number {
+    return this.array.reduce((a, b) => a + b, 0);
+  }
+
+  get spaces(): number {
+    return this.array.filter(num => num === 0).length;
+  }
+
+  get status(): boolean {
+    const arr = [
+      movements.down(this),
+      movements.left(this),
+      movements.up(this),
+      movements.right(this)
+    ].map(board => eql(board.array, this.array))
+    return !arr.every(bool => bool)
+  }
+
+  init(): void {
+    const index1 = Math.floor(Math.random() * this.array.length);
+    let index2 = Math.floor(Math.random() * this.array.length);
+    while (index1 === index2) {
+      index2 = Math.floor(Math.random() * this.array.length);
+    }
+
+    this.newSquare(index1);
+    this.newSquare(index2);
+  }
+
+  newSquare(index: number): void {
+    this.array[index] = Math.random() > .8 ? 4 : 2
+  }
+}
+
+function eql(arr1: number[], arr2: number[]): boolean {
+  return arr2.every((_, i) => arr1[i] === arr2[i]);
+}
+
+const movements = {
   left(board: Board): Board {
     const matrix: number[][] = Array.from(board.matrix);
     const n: number = board.scale;
@@ -37,8 +98,6 @@ export const movements = {
       }
       const newIndex = emptySpots[Math.floor(Math.random() * emptySpots.length)];
       output.newSquare(newIndex);
-      output.calcScore();
-      output.updateRemainingSpaces();
       return output;
     }
   },
@@ -81,8 +140,6 @@ export const movements = {
       }
       const newIndex = emptySpots[Math.floor(Math.random() * emptySpots.length)];
       output.newSquare(newIndex);
-      output.calcScore();
-      output.updateRemainingSpaces();
       return output;
     }
   },
@@ -135,8 +192,6 @@ export const movements = {
       }
       const newIndex = emptySpots[Math.floor(Math.random() * emptySpots.length)];
       output.newSquare(newIndex);
-      output.calcScore();
-      output.updateRemainingSpaces();
       return output;
     }
   },
@@ -191,13 +246,7 @@ export const movements = {
       }
       const newIndex = emptySpots[Math.floor(Math.random() * emptySpots.length)]
       output.newSquare(newIndex);
-      output.calcScore();
-      output.updateRemainingSpaces();
       return output;
     }
   }
-}
-
-function eql(arr1: number[], arr2: number[]): Boolean {
-  return arr1.every((_, i) => arr1[i] === arr2[i]);
 }

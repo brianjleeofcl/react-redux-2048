@@ -22,7 +22,7 @@ export default class Square extends React.Component<prop,null> {
     }
     const { children } = this.props;
 
-    return <div style={{backgroundColor: `${colorMap[children]}`}}>
+    return <div className="Square" style={{backgroundColor: `${colorMap[children]}`}}>
       {children}
     </div>
   }

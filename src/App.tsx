@@ -1,23 +1,41 @@
 import * as React from 'react';
-import { BrowserRouter as Router, Route } from 'react-router-dom';
+// import { BrowserRouter as Router, Route } from 'react-router-dom';
+// import { bindActionCreators, Dispatch } from 'redux';
 import './App.css';
-import Board from './board/Board';
+import Board from './board/BoardContainer';
 
-// const logo = require('./logo.svg');
+import { State } from './classes/state.interface';
 
-class App extends React.Component<{}, null> {
+import { connect } from 'react-redux';
+
+// import * as keyboardActions from './store/actions/keyboard'
+
+interface ConnectedState {
+  board: any
+}
+
+class App extends React.Component<ConnectedState, {}> {
   render() {
+    const {board} = this.props;
     return (
       <div className="App">
         <div className="App-header">
           <h1>2048</h1>
         </div>
-        <Router>
-          <Route exact path="/" component={Board} />
-        </Router>
+        <Board board={board}/>
       </div>
     );
   }
 }
 
-export default App;
+function mapStatetoProps(state: State): ConnectedState {
+  return { board: state.board }
+}
+
+// function mapDispatchtoProps(dispatch: Dispatch<any>) {
+//   return {
+//     action: bindActionCreators(keyboardActions ,dispatch)
+//   }
+// }
+
+export default connect(mapStatetoProps)(App);
