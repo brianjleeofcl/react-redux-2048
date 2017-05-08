@@ -1,13 +1,16 @@
-/*import * as React from 'react'
-import { Link } from 'react-router-dom'
-// import {History} from 'history';
+import * as React from 'react'
 import './Modal.css'
 
-export default function Modal({children}) {
-  return <div className="Modal-background" onClick={() => history.push('/')}>
+interface Prop {
+  title: string;
+  children: JSX.Element;
+}
+
+export default function Modal({ children, title }: Prop): JSX.Element {
+  return <div className="Modal-background">
     <div className="Modal">
-      <div>{children}</div>
-      <Link to="/">Close Modal</Link>
+      <h3>{title}</h3>
+      {children}
     </div>
   </div>
-}*/
+}

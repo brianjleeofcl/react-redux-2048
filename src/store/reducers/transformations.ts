@@ -6,7 +6,7 @@ export default {
     const n: number = board.scale;
 
     for (const row of matrix) {
-      let done = 0
+      let done = 0;
       for (let i = 1; i < row.length; i++) {
         if (row[i] && (row[done] === row[i])) {
           row[done] += row[i];
@@ -26,13 +26,13 @@ export default {
     const output: Board = new Board(n);
     output.matrix = matrix;
 
-    if(eql(board.array, output.array)) {
-      return board
+    if (eql(board.array, output.array)) {
+      return board;
     } else {
-      const emptySpots = []
+      const emptySpots = [];
       for (let i = 0; i < n; i++) {
         if (!output.array[(n - 1) + i * n]) {
-          emptySpots.push((n - 1) + i * n)
+          emptySpots.push((n - 1) + i * n);
         }
       }
       const newIndex = emptySpots[Math.floor(Math.random() * emptySpots.length)];
@@ -68,10 +68,10 @@ export default {
     const output: Board = new Board(n);
     output.matrix = matrix;
 
-    if(eql(board.array, output.array)) {
+    if (eql(board.array, output.array)) {
       return board;
     } else {
-      const emptySpots = []
+      const emptySpots = [];
       for (let i = 0; i < n; i++) {
         if (!output.array[i * n]) {
           emptySpots.push(i * n);
@@ -102,26 +102,26 @@ export default {
           done++;
         }
         if (row[i] && row[done] && (row[done] !== row[i])) {
-          done++
+          done++;
         }
         if (row[i] && !row[done]) {
-          row[done] = row[i]
-          row[i] = 0
+          row[done] = row[i];
+          row[i] = 0;
         }
       }
     }
 
-    const outputArr: number[] = []
+    const outputArr: number[] = [];
     for (let i = 0; i < matrix.length; i++) {
       for (let j = 0; j < matrix[i].length; j++) {
-        outputArr[j * n + i] = matrix[i][j]
+        outputArr[j * n + i] = matrix[i][j];
       }
     }
 
     const output: Board = new Board(n);
     output.array = outputArr;
 
-    if(eql(board.array, output.array)) {
+    if (eql(board.array, output.array)) {
       return board;
     } else {
       const emptySpots = [];
@@ -176,8 +176,8 @@ export default {
     const output: Board = new Board(n);
     output.array = outputArr;
 
-    if(eql(board.array, output.array)) {
-      return board
+    if (eql(board.array, output.array)) {
+      return board;
     } else {
       const emptySpots = [];
       for (let i = 0; i < n; i++) {
@@ -185,13 +185,13 @@ export default {
           emptySpots.push(i);
         }
       }
-      const newIndex = emptySpots[Math.floor(Math.random() * emptySpots.length)]
+      const newIndex = emptySpots[Math.floor(Math.random() * emptySpots.length)];
       output.newSquare(newIndex);
       return output;
     }
   }
-}
+};
 
 function eql(arr1: number[], arr2: number[]): Boolean {
   return arr1.every((_, i) => arr1[i] === arr2[i]);
-}
+};

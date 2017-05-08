@@ -1,8 +1,7 @@
 import * as React from 'react';
-// import { BrowserRouter as Router, Route } from 'react-router-dom';
 // import { bindActionCreators, Dispatch } from 'redux';
 import './App.css';
-import Board from './board/BoardContainer';
+import Board from './board/Board';
 
 import { State } from './classes/state.interface';
 
