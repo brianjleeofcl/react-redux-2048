@@ -24,6 +24,9 @@
   "devDependencies": {
     "react-scripts-ts": "1.3.0"
   },
+  "engine": {
+    "node": "7.8.0"
+  },
   "scripts": {
     "start": "react-scripts-ts start & nodemon server/bin/www",
     "build": "react-scripts-ts build",
