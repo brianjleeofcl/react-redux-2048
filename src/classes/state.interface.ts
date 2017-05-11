@@ -1,5 +1,7 @@
 import Board from './board.class';
 
-export interface State {
+interface State {
   board: Board;
 }
+
+export default State;

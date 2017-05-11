@@ -1,7 +1,4 @@
 import * as React from 'react';
-import { store } from '../store/store';
-import { moveBoard } from '../store/actions/keyboard';
-import { reinitBoard } from '../store/actions/reinitialize';
 import BlankSquare from './squares/Blank';
 import Square from './squares/Square';
 import Button from '../button/Button';
@@ -16,6 +13,8 @@ interface State {
 
 interface Props {
   board: Board;
+  keyboard: (num:number) => void;
+  restart: () => void;
 };
 
 class BoardComponent extends React.Component<Props, State> {
@@ -30,11 +29,7 @@ class BoardComponent extends React.Component<Props, State> {
   };
 
   handleKey(event: React.KeyboardEvent<Window>): void {
-    if (event.which >= 37 && event.which <= 40) store.dispatch(moveBoard(event.which));
-  };
-
-  resetBoard(): void {
-    store.dispatch(reinitBoard());
+    if (event.which >= 37 && event.which <= 40) this.props.keyboard(event.which);
   };
 
   showModal(): void{
@@ -46,13 +41,13 @@ class BoardComponent extends React.Component<Props, State> {
   };
 
   render(): JSX.Element {
-    const {board} = this.props;
+    const { board, restart } = this.props;
     return <div className="Board-background">
       <div className="Board-buttons">
         <Button click={this.showModal}>
           Current score: {board.score}
         </Button>
-        <Button click={this.resetBoard}>Reset</Button>
+        <Button click={restart}>Reset</Button>
       </div>
       <div className="Board">
         {board.array.map((num: number, i: number) => num
@@ -60,7 +55,7 @@ class BoardComponent extends React.Component<Props, State> {
           : <BlankSquare key={`blank-${i}`}/>
         )}
       </div>
-      {!board.status? <GameOver score={board.score} resetBoard={this.resetBoard}/> : ''}
+      {!board.status? <GameOver score={board.score} resetBoard={restart}/> : ''}
       {this.state.scoreModal? <Scores closeModal={this.closeModal}/> : ''}
     </div>
   };

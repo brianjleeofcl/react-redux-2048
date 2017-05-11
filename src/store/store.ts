@@ -1,4 +1,6 @@
-import { createStore } from 'redux';
+import { createStore, Store, applyMiddleware } from 'redux';
+import apiMiddleware from './middleware/API';
 import reducers from './reducers/root';
+import State from '../classes/state.interface';
 
-export const store = createStore(reducers);
+export const store: Store<State> = createStore(reducers, applyMiddleware(apiMiddleware));

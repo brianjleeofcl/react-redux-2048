@@ -1,6 +1,6 @@
 import { Action } from 'redux';
 import { INIT } from '../constants';
 
-export function reinitBoard(): Action {
+export default function reinitBoard(): Action {
   return { type: INIT };
 };

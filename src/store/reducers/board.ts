@@ -10,7 +10,7 @@ function initBoard(): Board {
   return blank
 }
 
-export default function boardReducer(board: Board = initBoard(), action: Action) {
+export default function boardReducer(board: Board = initBoard(), action: Action): Board {
   switch(action.type) {
     case INIT:
       return initBoard();
