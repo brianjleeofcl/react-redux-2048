@@ -19,13 +19,13 @@ router.get('/', (req, res) => {
     })
   } else {
     const name = rid()
-    knex('users').insert({ name, hash_pw: null }, '*').then(arr => {
-      const userId = arr[0].id
+    knex('users').insert({ name, hash_pw: null }, '*').then(([newUser]) => {
+      const userId = newUser.id;
       res.cookie('userId', userId, {
         httpOnly: true,
         expiresIn: new Date(Date.now() + 3600000 * 24 * 120),
         secure: router.get('env') === 'Production',
-      }).send({userId, name, logged: false})
+      }).send({ userId, name, logged: false })
     })
   }
 })

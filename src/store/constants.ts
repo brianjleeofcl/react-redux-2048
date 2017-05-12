@@ -5,4 +5,6 @@ export const MOVE_RIGHT = 'MOVE_RIGHT';
 export const INIT = 'INIT';
 export const API = 'API';
 export const API_RESPONSE = 'API_RESPONSE';
-export const API_ERROR = 'API_ERROR'
+export const API_ERROR = 'API_ERROR';
+export const API_RESPONSE_SCORES = 'API_RESPONSE_SCORES';
+export const API_RESPONSE_USER = 'API_RESPONSE_USER';

@@ -1,8 +1,6 @@
 import { Action } from 'redux';
 import { MOVE_UP, MOVE_DOWN, MOVE_LEFT, MOVE_RIGHT, INIT } from '../constants';
 import Board from '../../classes/board.class';
-import movements from './transformations';
-const {up, down, left, right} = movements;
 
 function initBoard(): Board {
   const blank = new Board(4);
@@ -15,13 +13,13 @@ export default function boardReducer(board: Board = initBoard(), action: Action)
     case INIT:
       return initBoard();
     case MOVE_UP:
-      return up(board);
+      return board.move('up');
     case MOVE_DOWN:
-      return down(board);
+      return board.move('down');
     case MOVE_LEFT:
-      return left(board);
+      return board.move('left');
     case MOVE_RIGHT:
-      return right(board);
+      return board.move('right');
   }
   return board;
 }

@@ -1,23 +1,36 @@
 import * as React from 'react';
+import {connect} from 'react-redux';
+
 import BlankSquare from './squares/Blank';
 import Square from './squares/Square';
 import Button from '../button/Button';
 import GameOver from './GameOver/GameOver';
 import Scores from './Scores/Scores';
+
+import CallAPI from '../store/actions/API';
+import keyboardActions from '../store/actions/keyboard';
+import reinitialize from '../store/actions/reinitialize';
+
 import Board from '../classes/board.class';
+import Score from '../classes/score.class';
+import State from '../classes/state.interface';
 import './Board.css'
 
-interface State {
+interface LocalState {
   scoreModal: boolean;
 };
 
-interface Props {
+interface StateProps {
   board: Board;
-  keyboard: (num:number) => void;
-  restart: () => void;
+  scores: Score[];
 };
+interface DispatchProps {
+  keyboard: (key: number) => void;
+  restart: () => void;
+  getScores: () => void;
+}
 
-class BoardComponent extends React.Component<Props, State> {
+class BoardComponent extends React.Component<StateProps & DispatchProps, LocalState> {
   constructor(props: any) {
     super(props);
     window.addEventListener('keydown', this.handleKey.bind(this));
@@ -33,6 +46,7 @@ class BoardComponent extends React.Component<Props, State> {
   };
 
   showModal(): void{
+    this.props.getScores();
     this.setState({ scoreModal: true });
   };
 
@@ -41,7 +55,7 @@ class BoardComponent extends React.Component<Props, State> {
   };
 
   render(): JSX.Element {
-    const { board, restart } = this.props;
+    const { board, restart, scores } = this.props;
     return <div className="Board-background">
       <div className="Board-buttons">
         <Button click={this.showModal}>
@@ -56,9 +70,21 @@ class BoardComponent extends React.Component<Props, State> {
         )}
       </div>
       {!board.status? <GameOver score={board.score} resetBoard={restart}/> : ''}
-      {this.state.scoreModal? <Scores closeModal={this.closeModal}/> : ''}
+      {this.state.scoreModal? <Scores scores={scores} closeModal={this.closeModal} /> : ''}
     </div>
   };
 };
 
-export default BoardComponent;
+function mapStatetoProps(state: State): StateProps {
+  return { board: state.board, scores: state.topScores }
+}
+
+function mapDispatchtoProps(dispatch:any) {
+  return {
+    keyboard: (key: number): void => dispatch(keyboardActions(key)),
+    restart: (): void => dispatch(reinitialize()),
+    getScores: (): void => dispatch(CallAPI({url: '/api/scores/', method: 'GET', handler:'SCORES'}))
+  }
+}
+
+export default connect(mapStatetoProps, mapDispatchtoProps)(BoardComponent);

@@ -1,14 +1,20 @@
 import * as React from 'react';
+
 import Modal from '../../modal/Modal';
 import Button from '../../button/Button';
 
+import Score from '../../classes/score.class';
+
+const loading = require('../../loading.svg');
+
 interface Prop {
   closeModal: () => void;
-  
+  scores: Score[];
 }
 
-export default function Scores({closeModal}: Prop): JSX.Element {
-  const content: JSX.Element = <div>
+export default function Scores({closeModal, scores}: Prop): JSX.Element {
+  const content: JSX.Element = <div className="Scores">
+    {scores.length > 0 ? '' : <img src={loading} className="Scores-loading"/>}
     <table className="High-scores-table">
       <thead>
         <tr>
@@ -18,17 +24,11 @@ export default function Scores({closeModal}: Prop): JSX.Element {
         </tr>
       </thead>
       <tbody>
-        {/*{this.state.scores.map((obj, i) => <tr key={obj.id}>
+        {scores.map((obj: Score, i) => <tr key={obj.id}>
           <td>#{i + 1}</td>
           <td>{obj.score}</td>
           <td>{obj.name}</td>
-        </tr>)}*/}
-
-        <tr>
-          <td>1</td>
-          <td>100</td>
-          <td>blabar</td>
-        </tr>
+        </tr>)}
       </tbody>
     </table>
     <Button click={closeModal}>Close</Button>

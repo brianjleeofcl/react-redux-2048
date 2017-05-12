@@ -2,6 +2,8 @@ const path = require('path');
 const express = require('express');
 const app = express()
 
+app.disable('x-powered-by');
+
 app.use(
   require('morgan')('dev'),
   require('body-parser').json(),
